@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Mybatis-plus多表查询的应用</title>
+    <link href="/2022/09/25/Mybatis-plus%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%BA%94%E7%94%A8/"/>
+    <url>/2022/09/25/Mybatis-plus%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%BA%94%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>关于Mybatis-plus多表查询的实际应用</p><span id="more"></span><h3 id="sql知识点"><a href="#sql知识点" class="headerlink" title="sql知识点"></a>sql知识点</h3><h4 id="多个left-join"><a href="#多个left-join" class="headerlink" title="多个left join"></a>多个left join</h4><p>在实际工作中，很多情况下会用到外连接，尤其是做主页面的数据展示查询时，连续用到多个left join会很常见，这样的多个left join会怎么样执行呢，之前在网上查到的执行顺序是，顺序的从坐到右的连接表，例如有 a,b,c三张表的数据都需要查到，就需要进行连接查询，如 select *  from  a  left join b on a.id = b.id left join a.id = c.id，这时是怎么顺序进行执行的呢？</p><p> 上网找资料，我们得知是a表先和b表进行连接，会生成一张中间临时表，然后这张表的数据再和c表进行连接，最后生成的表的数据就是a left join b left join c 的。</p><p> a left join b on 条件1 left join c on 条件2 执行顺序是：先a和b进行连接，生成一张中间表d，然后再和c进行条件连接生成最后的表的数据 </p><p> select * from a left join b on （a,b的连接条件）left join c on(a,b形成的临时中间表和c的连接条件)</p><h4 id="案例1"><a href="#案例1" class="headerlink" title="案例1"></a>案例1</h4><p>查询每个资源下的所有角色 一对多<br>所用的表<br>ums_resource<br>ums_role<br>ums_role_resource_relation</p><p>实体类</p><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-meta">@Data</span><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ResourceRoleDTO</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">UmsResource</span></span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">List</span>&lt;<span class="hljs-type">UmsRole</span>&gt; roleList;<br>&#125;<br></code></pre></td></tr></table></figure><p>UmsResourceMapper中<br>collection的property对应实体类属性名称<br>resultMap对应实体类的Mapper.BaseResultMap</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">   &lt;resultMap id=&quot;AllResourceRoleMap&quot; extends=&quot;BaseResultMap&quot; <span class="hljs-keyword">type</span>=&quot;com.example.mall.dto.ResourceRoleDTO&quot;&gt;<br>   <br>&lt;collection property=&quot;roleList&quot; columnPrefix=&quot;rl_&quot;          <br><br>resultMap=&quot;com.example.mall.modules.ums.mapper.UmsRoleMapper.BaseResultMap&quot;&gt;&lt;/collection&gt;<br>   &lt;/resultMap&gt;<br><br>   &lt;<span class="hljs-keyword">select</span> id=&quot;getAllResourceRole&quot; resultMap=&quot;AllResourceRoleMap&quot;&gt;<br>       <span class="hljs-keyword">SELECT</span> r.id,<br>              r.`<span class="hljs-type">name</span>`,<br>              r.url,<br>              rl.`<span class="hljs-type">name</span>` rl_name<br>       <span class="hljs-keyword">FROM</span> ums_resource r<br>                <span class="hljs-keyword">LEFT JOIN</span> ums_role_resource_relation rrr <span class="hljs-keyword">on</span> rrr.resource_id = r.id<br>                <span class="hljs-keyword">LEFT JOIN</span> ums_role rl <span class="hljs-keyword">on</span> rl.id = rrr.role_id<br>       <span class="hljs-keyword">where</span> rl.`<span class="hljs-type">name</span>` <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span><br>       <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> r.id<br>   &lt;/<span class="hljs-keyword">select</span>&gt;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>MybatisPlus</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>sql语句</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>mall商城搭建环境(二)</title>
     <link href="/2022/09/25/mall%E5%95%86%E5%9F%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83-%E4%BA%8C/"/>
     <url>/2022/09/25/mall%E5%95%86%E5%9F%8E%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83-%E4%BA%8C/</url>
