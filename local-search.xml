@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>计算机网络(一)</title>
+    <link href="/2022/10/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E4%B8%80/"/>
+    <url>/2022/10/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E4%B8%80/</url>
+    
+    <content type="html"><![CDATA[<h2 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h2><h3 id="1-1三种交换方式"><a href="#1-1三种交换方式" class="headerlink" title="1.1三种交换方式"></a>1.1三种交换方式</h3><ul><li>电路交换</li><li>报文交换 </li><li>分组交换</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>计算机网络</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>计算机网络</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>随笔</title>
+    <link href="/2022/09/25/%E9%9A%8F%E7%AC%94/"/>
+    <url>/2022/09/25/%E9%9A%8F%E7%AC%94/</url>
+    
+    <content type="html"><![CDATA[<p>CSRF - 跨站请求伪造<a href="https://blog.csdn.net/weixin_46601374/article/details/123194942">CSRF - 跨站请求伪造</a><br>SpringSecurity<a href="https://blog.csdn.net/weixin_43847283/article/details/124075302">SpringSecurity</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Mybatis-plus多表查询的应用</title>
     <link href="/2022/09/25/Mybatis-plus%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%BA%94%E7%94%A8/"/>
     <url>/2022/09/25/Mybatis-plus%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%BA%94%E7%94%A8/</url>
